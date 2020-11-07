@@ -3,13 +3,9 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-hola-mundo": {
+    "angular-whislist": {
       "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "sass"
-        }
-      },
+      "schematics": {},
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -17,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angular-hola-mundo",
+            "outputPath": "dist/angular-whislist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -28,7 +24,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.sass"
+              "src/styles.css"
             ],
             "scripts": []
           },
@@ -66,18 +62,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angular-hola-mundo:build"
+            "browserTarget": "angular-whislist:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "angular-hola-mundo:build:production"
+              "browserTarget": "angular-whislist:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-hola-mundo:build"
+            "browserTarget": "angular-whislist:build"
           }
         },
         "test": {
@@ -92,7 +88,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.sass"
+              "src/styles.css"
             ],
             "scripts": []
           }
@@ -114,18 +110,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "angular-hola-mundo:serve"
+            "devServerTarget": "angular-whislist:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "angular-hola-mundo:serve:production"
+              "devServerTarget": "angular-whislist:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "angular-hola-mundo",
+  "defaultProject": "angular-whislist",
   "cli": {
     "analytics": false
   }
