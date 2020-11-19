@@ -7,6 +7,9 @@
         <input type="text" class="form-control" id="nombre" placeholder="Ingresar nombre..." 
         [formControl]="fg.controls['nombre']"
         >
+        <ul>
+            <li *ngFor="let r of searchResults;">{{r}}</li>
+        </ul>
         <div *ngIf="fg.controls['nombre'].hasError('required')">nombre requerido!</div>
         <div *ngIf="fg.controls['nombre'].hasError('invalidNombre')">nombre invalido!</div>
         <div *ngIf="fg.controls['nombre'].hasError('minLongNombre')">nombre debe tener al menos {{minLongitud}} de largo!</div>

@@ -20,4 +20,14 @@ export class DestinosApiClient {
     getById(id :string) :DestinoViaje {
         return this.destinos.filter(function(d){d.id.toString() == id; })[0];
     }
+
+    elegir(d :DestinoViaje){
+        this.destinos.forEach(x => x.setSelected(false));
+        d.setSelected(true);
+        this.current.next(d);
+    }
+
+    subscribeOnChange(fn) {
+        this.current.subscribe(fn);
+    }
 }

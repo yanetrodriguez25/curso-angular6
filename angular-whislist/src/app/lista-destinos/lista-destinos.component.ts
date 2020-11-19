@@ -9,25 +9,30 @@ import { DestinoViaje } from './../Models/destino-viaje.model';
 })
 export class ListaDestinosComponent implements OnInit {
   @Output() onItemAdded: EventEmitter<DestinoViaje>;
-
-  api: DestinosApiClient;
-  
+  updates :string[];
+  api : DestinosApiClient;
   constructor() {
+    this.api = new DestinosApiClient();
     this.onItemAdded = new EventEmitter();
-  	this.api = new DestinosApiClient();
+    this.updates = [];
+
+    this.api.subscribeOnChange((d :DestinoViaje) => {
+      if(d != null){
+          this.updates.push("se ha elegido a " + d.nombre);
+      }
+    });
   }
 
   ngOnInit(): void {
   }
 
   agregado(d: DestinoViaje) {
-    this.api.destinos.push(d);
+    this.api.add(d);
     this.onItemAdded.emit(d);
   }
 
   elegido(d :DestinoViaje){
-    this.api.destinos.forEach(function(x){ x.setSelected(false);});
-    d.setSelected(true);
+    this.api.elegir(d);
   }
 
 }
