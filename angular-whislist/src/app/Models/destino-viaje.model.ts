@@ -13,17 +13,14 @@ export class DestinoViaje {
 	}
 
 	setSelected(s :boolean){
-		var tempDestino = JSON.parse(JSON.stringify(this));
-		tempDestino.selected = s;
+		this.selected = s;
 	}
 
 	voteUp() {
-		var tempDestino = JSON.parse(JSON.stringify(this));
-		tempDestino.votes++;
+		this.votes++;
 	}
 	
 	voteDowm() {
-		var tempDestino = JSON.parse(JSON.stringify(this));
-		tempDestino.votes--;
+		this.votes--;
     }
 }
