@@ -8,8 +8,9 @@ import { ListaDestinosComponent } from './lista-destinos/lista-destinos.componen
 import { DestinoDetalleComponent } from './destino-detalle/destino-detalle.component';
 import { FormDestinoViajeComponent } from './form-destino-viaje/form-destino-viaje.component';
 import { DestinoViajeEffects, DestinoViajeState, InitializeDestinoViajeState, reducerDestinoViajes } from './Models/destino-vieaje-state.model';
-import { StoreModule as NgrxStoreModule, ActionReducerMap} from '@ngrx/store'
-import { EffectsModule} from '@ngrx/effects'
+import { StoreModule as NgrxStoreModule, ActionReducerMap} from '@ngrx/store';
+import { EffectsModule} from '@ngrx/effects';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 
 const routes: Routes = [
   {path:'', redirectTo:'home', pathMatch: 'full'},
@@ -45,7 +46,8 @@ let reducersInitialState = {
     ReactiveFormsModule,
     RouterModule.forRoot(routes),
     NgrxStoreModule.forRoot(reducers, {initialState : reducersInitialState}),
-    EffectsModule.forRoot([DestinoViajeEffects])
+    EffectsModule.forRoot([DestinoViajeEffects]),
+    StoreDevtoolsModule.instrument()
   ],
   providers: [],
   bootstrap: [AppComponent]

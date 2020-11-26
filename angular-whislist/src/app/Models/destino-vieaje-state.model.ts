@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators';
 
-export interface DestinoViajeState{
+export interface DestinoViajeState {
     items :DestinoViaje[];
     loading :boolean;
     favorito :DestinoViaje;
@@ -21,7 +21,9 @@ export const InitializeDestinoViajeState = function() {
 
 export enum DestinoViajeActionTypes {
     NUEVO_DESTINO = '[Destinos viajes] Nuevo',
-    ELEGIDO_FAVORITO = '[Destinos viajes] Favorito'
+    ELEGIDO_FAVORITO = '[Destinos viajes] Favorito',
+    VOTE_UP = '[Destinos viajes] Vote Up',
+    VOTE_DOWN = '[Destinos viajes] Vote Dowm',
 }
 
 export class NuevoDestinoAction implements Action {
@@ -34,7 +36,17 @@ export class ElegidoFavoritoAction implements Action {
     constructor(public destino :DestinoViaje){}
 }
 
-export type DestinoViajeActions = NuevoDestinoAction | ElegidoFavoritoAction;
+export class VoteUpAction implements Action {
+    type = DestinoViajeActionTypes.VOTE_UP;
+    constructor(public destino :DestinoViaje){}
+}
+
+export class VoteDownAction implements Action {
+    type = DestinoViajeActionTypes.VOTE_DOWN;
+    constructor(public destino :DestinoViaje){}
+}
+
+export type DestinoViajeActions = NuevoDestinoAction | ElegidoFavoritoAction | VoteUpAction | VoteDownAction;
 
 export function reducerDestinoViajes(
     state: DestinoViajeState,
@@ -49,11 +61,25 @@ export function reducerDestinoViajes(
         }
         case DestinoViajeActionTypes.ELEGIDO_FAVORITO : {
             state.items.forEach(x => x.setSelected(false));
-            const fav: DestinoViaje = (action as NuevoDestinoAction).destino;
+            const fav: DestinoViaje = (action as ElegidoFavoritoAction).destino;
             fav.setSelected(true);
             return {
                 ...state,
                 favorito:fav
+            };
+        }
+        case DestinoViajeActionTypes.VOTE_UP: {
+            const d: DestinoViaje = (action as VoteUpAction).destino;
+            d.voteUp();
+            return {
+                ...state
+            };
+        }
+        case DestinoViajeActionTypes.VOTE_DOWN : {
+            const d: DestinoViaje = (action as VoteDownAction).destino;
+            d.voteDowm();
+            return {
+                ...state
             };
         }
     }
