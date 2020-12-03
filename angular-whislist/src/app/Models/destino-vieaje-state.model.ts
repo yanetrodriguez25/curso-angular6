@@ -11,12 +11,12 @@ export interface DestinoViajeState {
     favorito :DestinoViaje;
 }
 
-export const InitializeDestinoViajeState = function() {
+export function InitializeDestinoViajeState() {
     return {
         items :[],
         loading :false,
         favorito : null
-    }
+    };
 }
 
 export enum DestinoViajeActionTypes {
@@ -24,6 +24,7 @@ export enum DestinoViajeActionTypes {
     ELEGIDO_FAVORITO = '[Destinos viajes] Favorito',
     VOTE_UP = '[Destinos viajes] Vote Up',
     VOTE_DOWN = '[Destinos viajes] Vote Dowm',
+    INIT_MY_DATA = '[Destinos viajes] Init my data'
 }
 
 export class NuevoDestinoAction implements Action {
@@ -46,7 +47,12 @@ export class VoteDownAction implements Action {
     constructor(public destino :DestinoViaje){}
 }
 
-export type DestinoViajeActions = NuevoDestinoAction | ElegidoFavoritoAction | VoteUpAction | VoteDownAction;
+export class InitMyDataAction implements Action {
+    type = DestinoViajeActionTypes.INIT_MY_DATA;
+    constructor(public destinos :string[]){}
+}
+
+export type DestinoViajeActions = NuevoDestinoAction | ElegidoFavoritoAction | VoteUpAction | VoteDownAction | InitMyDataAction;
 
 export function reducerDestinoViajes(
     state: DestinoViajeState,
@@ -80,6 +86,13 @@ export function reducerDestinoViajes(
             d.voteDowm();
             return {
                 ...state
+            };
+        }
+        case DestinoViajeActionTypes.INIT_MY_DATA : {
+            const d: string[] = (action as InitMyDataAction).destinos;
+            return {
+                ...state,
+                items: d.map((d) => new DestinoViaje(d, ''))
             };
         }
     }

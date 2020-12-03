@@ -1,23 +1,21 @@
 import { Component, OnInit, Output, EventEmitter} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from './../../app.module';
-import { ElegidoFavoritoAction, NuevoDestinoAction } from './../../Models/destino-vieaje-state.model';
 import { DestinosApiClient } from './../../Models/destinos-api-client-models';
 import { DestinoViaje } from './../../Models/destino-viaje.model';
 
 @Component({
   selector: 'app-lista-destinos',
   templateUrl: './lista-destinos.component.html',
-  styleUrls: ['./lista-destinos.component.css']
+  styleUrls: ['./lista-destinos.component.css'],
+  providers:[DestinosApiClient]
 })
 export class ListaDestinosComponent implements OnInit {
   @Output() onItemAdded: EventEmitter<DestinoViaje>;
   updates :string[];
-  api : DestinosApiClient;
   all;
 
-  constructor(private store: Store<AppState>) {
-    this.api = new DestinosApiClient(store);
+  constructor(public api: DestinosApiClient, private store: Store<AppState>) {
     this.onItemAdded = new EventEmitter();
     this.updates = [];
     this.store.select(state => state.destinos.favorito)
