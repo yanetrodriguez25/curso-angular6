@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { APP_INITIALIZER, Injectable, InjectionToken, NgModule } from '@angular/core';
+import { APP_INITIALIZER, Inject, Injectable, InjectionToken, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
@@ -21,6 +21,8 @@ import { VuelosMasInfoComponent } from './components/vuelos/vuelos-mas-info/vuel
 import { VuelosDetalleComponent } from './components/vuelos/vuelos-detalle/vuelos-detalle.component';
 import { ReservasModule } from './reservas/reservas.module';
 import {HttpClient, HttpClientModule, HttpHeaders, HttpRequest} from '@angular/common/http'
+import Dexie from 'dexie';
+import { DestinoViaje } from './Models/destino-viaje.model';
 
 export interface AppConfig {
   apiEndpoint: string;
@@ -78,6 +80,21 @@ class AppLoadService {
   }
 }
 
+@Injectable({
+  providedIn:'root'
+})
+export class MyDatabase extends Dexie{
+  destinos : Dexie.Table<DestinoViaje, number>;
+  constructor(){
+    super('MyDatabase');
+    this.version(1).stores({
+      destinos:'++id, nombre,imagenUrl'
+    });
+  }
+}
+
+export const db = new MyDatabase();
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -112,7 +129,8 @@ class AppLoadService {
     UsuarioLogueadoGuard, 
     {provide: APP_CONFIG, useValue: APP_CONFIG_VALUE},
     AppLoadService,
-    {provide: APP_INITIALIZER, useFactory:init_app, deps :[AppLoadService], multi:true}
+    {provide: APP_INITIALIZER, useFactory:init_app, deps :[AppLoadService], multi:true},
+    MyDatabase
   ],
   bootstrap: [AppComponent]
 })
