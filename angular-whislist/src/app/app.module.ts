@@ -26,6 +26,9 @@ import { DestinoViaje } from './Models/destino-viaje.model';
 import { from, Observable } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { EspiameDirective } from './espiame.directive';
+import { TrackearClickDirective } from './trackear-click.directive'
 
 export interface AppConfig {
   apiEndpoint: string;
@@ -157,7 +160,9 @@ function HttpLoaderFactory(http:HttpClient){
     VuelosComponent,
     VuelosMainComponent,
     VuelosMasInfoComponent,
-    VuelosDetalleComponent
+    VuelosDetalleComponent,
+    EspiameDirective,
+    TrackearClickDirective
   ],
   imports: [
     BrowserModule,
@@ -179,7 +184,9 @@ function HttpLoaderFactory(http:HttpClient){
         useFactory: (HttpLoaderFactory),
         deps: [HttpClient]
       }
-    })
+    }),
+    //NgxMapboxGLModule, 
+    BrowserAnimationsModule
   ],
   providers: [
     AuthService,
