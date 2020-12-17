@@ -15,3 +15,4 @@ jobs:
       paths:
        - "node_modules"
      - run: npm run test -- --progress=false --watch=false --browsers=ChromeHeadlessCI
+
